@@ -6,12 +6,13 @@
 
       <div class="card text-center text-black">
         <div class="card-header">
-<!--          {{ this.note }}-->
+          {{ note }}
         </div>
         <div class="card-body">
           <h5 class="card-title">Special title treatment</h5>
           <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
           <a href="#" class="btn btn-primary"
+             @click="getNote"
           >Go somewhere</a>
 <!--          @delete-note="deleteNote"-->
           <!--             :notes="notes" @delete-note="deleteNote"-->
@@ -30,23 +31,24 @@ import NotesList from "@/components/NotesList";
 
 export default {
   name: "Edit",
-  // components: {
-  //   NotesList
-  // },
-  // data: () => ({
-  //   notes: JSON.parse(localStorage.getItem('notes') || '[]'),
-  // }),
-  // methods: {
-  //   getNote() {
-  //     this.notes.getElementById(this.$route.params.id)
-  //   }
-  // }
-  // methods: {
-  //   deleteNote(id) {
-  //     this.notes = this.notes.filter(n => n.id !== id)
-  //     localStorage.setItem('notes', JSON.stringify(this.notes))
-  //   }
-  // }
+  components: {
+    NotesList
+  },
+  data: () => ({
+    notes: JSON.parse(localStorage.getItem('notes') || '[]'),
+    note: null
+  }),
+  methods: {
+    getNote() {
+      const id = +this.$route.params.id
+      this.note = this.notes.find(x => x.id === id)
+      console.log(this.note)
+    },
+    deleteNote(id) {
+      this.notes = this.notes.filter(n => n.id !== id)
+      localStorage.setItem('notes', JSON.stringify(this.notes))
+    }
+  }
 }
 </script>
 
