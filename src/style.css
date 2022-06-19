@@ -1,0 +1,49 @@
+body {
+    background-color: #4fb6ff;
+    color: #ffffff;
+    font-family: cursive;
+    text-align: center;
+}
+
+.done {
+    text-decoration: line-through;
+}
+
+.invalid-tooltip {
+    position: initial;
+}
+
+.form-control.is-invalid:focus, .was-validated .form-control:invalid:focus {
+    border-color: #ced4da;
+    box-shadow: 0 0 0 0.25rem rgb(13 110 253 / 25%);
+}
+
+.form-control.is-invalid, .was-validated .form-control:invalid {
+    border-color: #ced4da;
+    padding-right: .75rem;
+}
+
+.form-control.is-valid, .was-validated .form-control:valid {
+    border-color: #ced4da;
+    background-image: none;
+    padding-right: .75rem;
+}
+
+.form-control.is-valid:focus, .was-validated .form-control:valid:focus {
+    border-color: #ced4da;
+    box-shadow: 0 0 0 0.25rem rgb(13 110 253 / 25%);
+}
+
+.toast {
+    width: fit-content;
+}
+
+/*.row {*/
+/*    --bs-gutter-x: 0;*/
+/*}*/
+/*textarea.form-control {*/
+/*    min-height: calc(5.5em + 0.75rem + 2px);*/
+/*}*/
+.valid-tooltip {
+    background-color: white;
+}
