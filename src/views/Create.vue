@@ -23,7 +23,6 @@ export default {
     addNote(note) {
       this.notes.push(note)
       localStorage.setItem('notes', JSON.stringify(this.notes))
-      console.log(note)
     }
   }
 }

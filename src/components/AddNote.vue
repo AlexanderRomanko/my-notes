@@ -45,7 +45,7 @@
     <div class="row text-center">
       <div class="col">
         <label for="date" class="my-2">Choose deadline date:</label>
-        <input type="date" class="form-control"
+        <input type="date" class="form-control text-center"
                :min="new Date().toISOString().substring(0, 10)"
                v-model="date"
         >
@@ -84,15 +84,10 @@ export default {
           tags: Array.from(this.tags),
           description: this.description,
           date: this.date,
-          completed: false
+          status: 'active'
         }
         this.$emit('add-note', newNote)
         this.$router.push('/list')
-        this.title = ''
-        this.tag = ''
-        this.tags = new Set
-        this.description = ''
-        this.date = new Date().toISOString().substring(0, 10)
       }
     },
     saveTag() {
