@@ -89,8 +89,10 @@ export default {
     }
   },
   mounted() {
-    this.description = this.note.description
-    this.date = this.note.date
+    if (this.note) {
+      this.description = this.note.description
+      this.date = this.note.date
+    }
   },
   computed: {
     note() {
