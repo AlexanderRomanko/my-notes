@@ -16,13 +16,10 @@ export default {
   components: {
     AddNote
   },
-  data: () => ({
-    notes: JSON.parse(localStorage.getItem('notes') || '[]')
-  }),
   methods: {
     addNote(note) {
-      this.notes.push(note)
-      localStorage.setItem('notes', JSON.stringify(this.notes))
+      this.$store.dispatch('createNote', note)
+      this.$router.push('/list')
     }
   }
 }

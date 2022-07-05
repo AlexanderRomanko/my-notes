@@ -21,6 +21,7 @@
               </li>
               <li class="list-group-item"><strong>description: </strong>
                 <textarea class="form-control text-center p-5" placeholder="description" maxlength="2048"
+                          :disabled="note.status === 'completed'"
                           v-model="description"
                 ></textarea>
                 <div class="valid-tooltip text-center position-static"
@@ -28,23 +29,31 @@
                   {{ description.length }}/2048
                 </div>
               </li>
-              <li class="list-group-item row-cols-1"><div><strong>deadline date: </strong></div>
+              <li class="list-group-item row-cols-1">
+                <div><strong>deadline date: </strong></div>
                 <input type="date" class="input-group-text bg-light"
+                       :disabled="note.status === 'completed'"
                        :min="new Date().toISOString().substring(0, 10)"
                        v-model="date"
                 >
               </li>
-              <li class="list-group-item"><div><strong>status: </strong></div>
+              <li class="list-group-item bg-opacity-25"
+                  :class="{'bg-success' : note.status === 'completed', 'bg-danger' : note.status === 'outdated'}">
+                <div><strong>status: </strong></div>
                 <span>{{ note.status }}</span>
               </li>
 
             </ul>
           </div>
           <div class="card-footer text-muted">
-            <button class="btn btn-warning mx-5" type="submit">Save changes</button>
-            <button class="btn btn-primary mx-5" type="button"
-              @click="completeTask"
-            >Complete task</button>
+            <button class="btn mx-5" type="submit"
+                    :class=" note.status === 'completed' ? 'disabled' : 'btn-warning'">Save changes
+            </button>
+            <button class="btn mx-5 " type="button"
+                    :class=" note.status === 'completed' ? 'disabled' : 'btn-primary'"
+                    @click="completeTask"
+            >Complete task
+            </button>
           </div>
         </div>
         <p v-else>Note not found</p>
@@ -61,28 +70,22 @@ export default {
   name: "Edit",
   data: () => ({
     description: '',
-    date: ''
+    date: null
   }),
   methods: {
     updateNote() {
-      const notes = JSON.parse(localStorage.getItem('notes') || '[]')
-      const index = notes.findIndex(index => index.id === +this.$route.params.id)
-      notes[index].description = this.description
-      notes[index].date = this.date
-      if (new Date(this.date) < Date.now()) {
-        notes[index].status = 'outdated'
-      } else {
-        notes[index].status = 'active'
-      }
-      localStorage.setItem('notes', JSON.stringify(notes))
-      this.$router.push('/list')
+        this.$store.dispatch('updateNote', {
+          id: this.note.id,
+          description: this.description,
+          date: this.date
+        })
+        this.$router.push('/list')
     },
     completeTask() {
-      const notes = JSON.parse(localStorage.getItem('notes') || '[]')
-      const index = notes.findIndex(index => index.id === +this.$route.params.id)
-      notes[index].status = 'completed'
-      localStorage.setItem('notes', JSON.stringify(notes))
-      this.$router.push('/list')
+      if (this.note.status !== 'completed') {
+        this.$store.dispatch('completeTask', this.note.id)
+        this.$router.push('/list')
+      }
     }
   },
   mounted() {
@@ -91,8 +94,7 @@ export default {
   },
   computed: {
     note() {
-      return JSON.parse(localStorage.getItem('notes') || '[]')
-          .find(note => note.id === +this.$route.params.id)
+      return this.$store.getters.noteById(+this.$route.params.id)
     }
   }
 }

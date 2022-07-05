@@ -46,7 +46,7 @@
       <div class="col">
         <label for="date" class="my-2">Choose deadline date:</label>
         <input type="date" class="form-control text-center"
-               :min="new Date().toISOString().substring(0, 10)"
+               :min="date"
                v-model="date"
         >
       </div>
@@ -54,7 +54,7 @@
 
     <div class="d-grid gap-2 col-6 mx-auto mt-3">
       <button class="btn" type="submit"
-              :class="title.trim() ? 'btn-warning' : 'btn-secondary'"
+              :class="title.trim() ? 'btn-warning' : 'disabled'"
       >Add
       </button>
     </div>
@@ -71,6 +71,7 @@ export default {
     tags: new Set,
     description: '',
     date: new Date().toISOString().substring(0, 10),
+    status: 'active',
     isClicked: false
   }),
   methods: {
@@ -78,16 +79,17 @@ export default {
       if (this.title.trim()) {
         if (this.tag.trim())
           this.tags.add(this.tag)
+        if (new Date(this.date) < new Date())
+          this.status = 'outdated'
         const newNote = {
           id: Date.now(),
           title: this.title,
           tags: Array.from(this.tags),
           description: this.description,
           date: this.date,
-          status: 'active'
+          status: this.status
         }
         this.$emit('add-note', newNote)
-        this.$router.push('/list')
       }
     },
     saveTag() {

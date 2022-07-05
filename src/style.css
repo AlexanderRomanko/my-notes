@@ -38,12 +38,6 @@ body {
     width: fit-content;
 }
 
-/*.row {*/
-/*    --bs-gutter-x: 0;*/
-/*}*/
-/*textarea.form-control {*/
-/*    min-height: calc(5.5em + 0.75rem + 2px);*/
-/*}*/
 .valid-tooltip {
     background-color: white;
 }
@@ -52,3 +46,43 @@ body {
     outline: none;
     box-shadow: 0 0 0 0.25rem rgb(13 110 253 / 25%);
 }
+.btn-primary {
+    background-color: #4fb6ff;
+    border: #4597d9;
+}
+.btn-primary:hover {
+    background-color: #4597d9;
+    border-color: #4597d9;
+}
+
+.container {
+    max-width: 100%;
+    padding: 0;
+    margin: auto;
+}
+td, th {
+    max-width: 8rem;
+    min-height: 3rem;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+}
+@media (max-width: 1000px) {
+
+    .table, thead, tbody, th, td {
+        display: block;
+    }
+    thead {
+        float: left;
+    }
+    tbody {
+        overflow-x: auto;
+    }
+    tbody tr {
+        display: table-cell;
+    }
+}
+
+
+
+
