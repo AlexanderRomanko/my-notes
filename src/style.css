@@ -1,7 +1,9 @@
+@import url("https://fonts.googleapis.com/css2?family=Comic+Neue:wght@700&display=swap");
+
 body {
     background-color: #4fb6ff;
     color: #ffffff;
-    font-family: cursive;
+    font-family: 'Comic Neue', cursive;
     text-align: center;
 }
 
